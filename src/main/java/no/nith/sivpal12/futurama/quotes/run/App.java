@@ -1,4 +1,4 @@
-package no.nith.sivpal12.spring.base.run;
+package no.nith.sivpal12.futurama.quotes.run;
 
 import java.io.IOException;
 
@@ -21,7 +21,7 @@ public class App {
     private static final Logger LOG = LogManager.getLogger();
 
     private static final String CONTEXT_PATH = "/";
-    private static final String CONFIG_PACKAGE_LOCATION = "no.nith.sivpal12.spring.base.spring.config";
+    private static final String CONFIG_PACKAGE_LOCATION = "no.nith.sivpal12.futurama.quotes.spring.config";
     private static final String MAPPING_URL = "/";
 
     private App(){
@@ -40,7 +40,8 @@ public class App {
 
     private static void configLog4j() {
         Configuration config = Configurator.initialize("minLogger", null).getConfiguration();
-        RegexFilter filter = RegexFilter.createFilter("no.nith.sivpal12.spring.base.spring",
+        RegexFilter filter = RegexFilter.createFilter(
+                "no.nith.sivpal12.futurama.quotes.spring",
                 Boolean.TRUE.toString(), Result.ACCEPT.name(), Result.ACCEPT.name());
         config.addFilter(filter);
     }
