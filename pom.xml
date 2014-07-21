@@ -2,16 +2,20 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>no.nith.sivpal12</groupId>
-    <artifactId>spring-base</artifactId>
+    <artifactId>futurama-quotes</artifactId>
     <packaging>jar</packaging>
     <version>1.0.0-SNAPSHOT</version>
-    <name>spring-base</name>
-    <url>http://maven.apache.org</url>
+    <name>Futurama Quotes</name>
+    <url>http://futuramaquotes.herokuapp.com/</url>
 
     <properties>
         <org.springframework.version>4.0.2.RELEASE</org.springframework.version>
         <compiler.version>1.7</compiler.version>
     </properties>
+
+    <scm>
+        <developerConnection>scm:git:git@heroku.com:futuramaquotes.git</developerConnection>
+    </scm>
 
     <dependencies>
         <!-- JETTY -->
@@ -116,6 +120,11 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.1</version>
                 <configuration>
@@ -138,7 +147,7 @@
                             <transformers>
                                 <transformer
                                     implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>no.nith.sivpal12.spring.base.run.App</mainClass>
+                                    <mainClass>no.nith.sivpal12.futurama.quotes.run.App</mainClass>
                                 </transformer>
                             </transformers>
                             <filters>

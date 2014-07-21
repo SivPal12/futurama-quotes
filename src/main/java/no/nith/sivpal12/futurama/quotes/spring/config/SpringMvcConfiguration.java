@@ -1,4 +1,4 @@
-package no.nith.sivpal12.spring.base.spring.config;
+package no.nith.sivpal12.futurama.quotes.spring.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -13,8 +13,8 @@ import org.springframework.web.servlet.view.JstlView;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = {
-        "no.nith.sivpal12.spring.base.controllers",
-        "no.nith.sivpal12.spring.base.services"
+        "no.nith.sivpal12.futurama.quotes.controllers",
+        "no.nith.sivpal12.futurama.quotes.services"
 })
 public class SpringMvcConfiguration extends WebMvcConfigurerAdapter {
 

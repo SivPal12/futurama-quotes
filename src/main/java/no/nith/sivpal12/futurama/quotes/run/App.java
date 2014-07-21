@@ -1,4 +1,4 @@
-package no.nith.sivpal12.spring.base.run;
+package no.nith.sivpal12.futurama.quotes.run;
 
 import java.io.IOException;
 
@@ -21,8 +21,10 @@ public class App {
     private static final Logger LOG = LogManager.getLogger();
 
     private static final String CONTEXT_PATH = "/";
-    private static final String CONFIG_PACKAGE_LOCATION = "no.nith.sivpal12.spring.base.spring.config";
+    private static final String CONFIG_PACKAGE_LOCATION = "no.nith.sivpal12.futurama.quotes.spring.config";
     private static final String MAPPING_URL = "/";
+    private static final String PORT = System.getProperty("PORT");
+    private static final int DEFAULT_PORT = 8080;
 
     private App(){
     }
@@ -31,7 +33,15 @@ public class App {
         configLog4j();
 
         LOG.info("Starting server");
-        Server server = new Server(8080);
+        Server server;
+        if (PORT != null) {
+            server = new Server(Integer.valueOf(PORT));
+        } else {
+            LOG.debug(String.format(
+                    "System property $PORT is null. Using {%s} instead.",
+                    DEFAULT_PORT));
+            server = new Server(DEFAULT_PORT);
+        }
         server.setHandler(getServletContextHandler(getContext()));
         server.start();
         LOG.info("Server started");
@@ -40,7 +50,8 @@ public class App {
 
     private static void configLog4j() {
         Configuration config = Configurator.initialize("minLogger", null).getConfiguration();
-        RegexFilter filter = RegexFilter.createFilter("no.nith.sivpal12.spring.base.spring",
+        RegexFilter filter = RegexFilter.createFilter(
+                "no.nith.sivpal12.futurama.quotes.spring",
                 Boolean.TRUE.toString(), Result.ACCEPT.name(), Result.ACCEPT.name());
         config.addFilter(filter);
     }
