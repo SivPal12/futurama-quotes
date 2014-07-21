@@ -4,7 +4,7 @@
     <groupId>no.nith.sivpal12</groupId>
     <artifactId>futurama-quotes</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
     <name>Futurama Quotes</name>
     <url>http://futuramaquotes.herokuapp.com/</url>
 
