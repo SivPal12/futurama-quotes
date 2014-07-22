@@ -23,7 +23,7 @@ public class App {
     private static final String CONTEXT_PATH = "/";
     private static final String CONFIG_PACKAGE_LOCATION = "no.nith.sivpal12.futurama.quotes.spring.config";
     private static final String MAPPING_URL = "/";
-    private static final String PORT = System.getProperty("PORT");
+    private static final String PORT = System.getenv("PORT");
     private static final int DEFAULT_PORT = 8080;
 
     private App(){
