@@ -13,10 +13,6 @@
         <compiler.version>1.7</compiler.version>
     </properties>
 
-    <scm>
-        <developerConnection>scm:git:git@heroku.com:futuramaquotes.git</developerConnection>
-    </scm>
-
     <dependencies>
         <!-- JETTY -->
         <dependency>
@@ -109,7 +105,6 @@
         </dependency>
     </dependencies>
 
-
     <build>
         <resources>
             <resource>
@@ -119,9 +114,21 @@
         </resources>
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.5</version>
+                <groupId>external.atlassian.jgitflow</groupId>
+                <artifactId>jgitflow-maven-plugin</artifactId>
+                <version>1.0-m3</version>
+                <configuration>
+                    <flowInitContext>
+                        <masterBranchName>master</masterBranchName>
+                        <developBranchName>develop</developBranchName>
+                        <featureBranchPrefix>feature-</featureBranchPrefix>
+                        <releaseBranchPrefix>release-</releaseBranchPrefix>
+                        <hotfixBranchPrefix>hotfix-</hotfixBranchPrefix>
+                        <versionTagPrefix>futurama-quotes-</versionTagPrefix>
+                    </flowInitContext>
+                    <scmCommentPrefix>[jgitflow] </scmCommentPrefix>
+                    <noDeploy>true</noDeploy>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -145,8 +152,7 @@
                         <configuration>
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <transformers>
-                                <transformer
-                                    implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
                                     <mainClass>no.nith.sivpal12.futurama.quotes.run.App</mainClass>
                                 </transformer>
                             </transformers>
