@@ -14,6 +14,28 @@
     </properties>
 
     <dependencies>
+        <!-- POSTGRES -->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.3-1102-jdbc41</version>
+        </dependency>
+        <!-- HIBERNATE -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>4.3.5.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>5.1.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-annotations</artifactId>
+            <version>3.5.6-Final</version>
+        </dependency>
         <!-- JETTY -->
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
@@ -43,6 +65,11 @@
             <version>2.0-rc1</version>
         </dependency>
         <!-- SPRING -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -108,8 +135,11 @@
     <build>
         <resources>
             <resource>
+                <directory>${basedir}/src/main/resources/jsp/</directory>
+                <targetPath>webapp/jsp</targetPath>
+            </resource>
+            <resource>
                 <directory>${basedir}/src/main/resources/</directory>
-                <targetPath>webapp</targetPath>
             </resource>
         </resources>
         <plugins>

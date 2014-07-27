@@ -1,0 +1,16 @@
+﻿-- Table: futurama_quote
+
+-- DROP TABLE futurama_quote;
+
+CREATE TABLE futurama_quote
+(
+  quote character varying(256) NOT NULL,
+  id smallint NOT NULL DEFAULT nextval('quotes_id_seq'::regclass),
+  CONSTRAINT "quote id PK" PRIMARY KEY (id),
+  CONSTRAINT "quote unique" UNIQUE (quote)
+)
+WITH (
+  OIDS=FALSE
+);
+ALTER TABLE futurama_quote
+  OWNER TO "futurama-quotes-users";
