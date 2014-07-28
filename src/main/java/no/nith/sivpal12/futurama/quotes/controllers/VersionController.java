@@ -29,8 +29,7 @@ public class VersionController {
             } catch (FileNotFoundException e) {
                 LOG.error(String.format("File {%s} not found!", APP_PROPERTIES));
             } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                LOG.error("Unknown expetion (IOException)", e);
             }
             VERSION = properties.getProperty(VERSION_PROPERTY_KEY);
         }
