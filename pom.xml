@@ -111,6 +111,13 @@
                 <directory>${basedir}/src/main/resources/</directory>
                 <targetPath>webapp</targetPath>
             </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>app-description.properties</include>
+                </includes>
+            </resource>
         </resources>
         <plugins>
             <plugin>
