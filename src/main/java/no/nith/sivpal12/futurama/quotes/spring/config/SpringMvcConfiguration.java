@@ -26,7 +26,7 @@ import org.springframework.web.servlet.view.JstlView;
 @ComponentScan(basePackages = {
         "no.nith.sivpal12.futurama.quotes.controllers",
         "no.nith.sivpal12.futurama.quotes.services",
-        "no.nith.sivpal12.futurama.quotes.repositorys"
+        "no.nith.sivpal12.futurama.quotes.repositories"
 })
 @EnableTransactionManagement
 @PropertySource("classpath:application.properties")
