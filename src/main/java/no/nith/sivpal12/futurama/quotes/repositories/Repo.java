@@ -1,6 +1,6 @@
-package no.nith.sivpal12.futurama.quotes.repositorys;
+package no.nith.sivpal12.futurama.quotes.repositories;
 
-import no.nith.sivpal12.futurama.quotes.db.objects.Quote;
+import no.nith.sivpal12.futurama.quotes.entities.Quote;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -21,5 +21,10 @@ public class Repo {
 
     public void save(Quote quote) {
         getCurrentSession().save(quote);
+    }
+
+    public String getQuote() {
+        return ((Quote) sessionFactory.getCurrentSession().get(Quote.class, 1))
+                .getQuote();
     }
 }

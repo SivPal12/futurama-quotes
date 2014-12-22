@@ -1,7 +1,7 @@
 package no.nith.sivpal12.futurama.quotes.services;
 
-import no.nith.sivpal12.futurama.quotes.db.objects.Quote;
-import no.nith.sivpal12.futurama.quotes.repositorys.Repo;
+import no.nith.sivpal12.futurama.quotes.entities.Quote;
+import no.nith.sivpal12.futurama.quotes.repositories.Repo;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +14,10 @@ public class TestService {
 
     public void save(Quote quote) {
         repo.save(quote);
+    }
+
+    public String getQuote() {
+        return repo.getQuote();
     }
 
 }
