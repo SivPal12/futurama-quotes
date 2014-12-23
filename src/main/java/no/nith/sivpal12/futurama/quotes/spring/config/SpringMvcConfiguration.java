@@ -1,5 +1,7 @@
 package no.nith.sivpal12.futurama.quotes.spring.config;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.Properties;
 
 import javax.sql.DataSource;
@@ -46,7 +48,7 @@ public class SpringMvcConfiguration extends WebMvcConfigurerAdapter {
     }
 
     @Bean
-    public SessionFactory sessionFactory() {
+    public SessionFactory sessionFactory() throws URISyntaxException {
         LocalSessionFactoryBuilder builder =
                 new LocalSessionFactoryBuilder(dataSource());
         builder.scanPackages("no.nith.sivpal12.futurama.quotes.entities")
@@ -56,14 +58,6 @@ public class SpringMvcConfiguration extends WebMvcConfigurerAdapter {
     }
 
     private Properties getHibernateProperties() {
-        // https://devcenter.heroku.com/articles/heroku-postgresql#spring-java
-        // URI dbUri = new URI(System.getenv("DATABASE_URL"));
-        // String username = dbUri.getUserInfo().split(":")[0];
-        // String password = dbUri.getUserInfo().split(":")[1];
-        // String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':'
-        // + dbUri.getPort() + dbUri.getPath();
-
-
         Properties prop = new Properties();
         prop.put(AvailableSettings.FORMAT_SQL, "true");
         prop.put(AvailableSettings.SHOW_SQL, "true");
@@ -73,18 +67,25 @@ public class SpringMvcConfiguration extends WebMvcConfigurerAdapter {
     }
 
     @Bean(name = "dataSource")
-    public DataSource dataSource() {
+    public DataSource dataSource() throws URISyntaxException {
+        // https://devcenter.heroku.com/articles/heroku-postgresql#spring-java
+        URI dbUri = new URI(System.getenv("DATABASE_URL"));
+        String username = dbUri.getUserInfo().split(":")[0];
+        String password = dbUri.getUserInfo().split(":")[1];
+        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':'
+                + dbUri.getPort() + dbUri.getPath();
+
         BasicDataSource ds = new BasicDataSource();
         ds.setDriverClassName("org.postgresql.Driver");
-        ds.setUrl("jdbc:postgresql://localhost:5432/futurama-quotes");
-        ds.setUsername("futurama-app");
-        ds.setPassword("postgres");
+        ds.setUrl(dbUrl);
+        ds.setUsername(username);
+        ds.setPassword(password);
         return ds;
     }
 
     // Create a transaction manager
     @Bean
-    public HibernateTransactionManager txManager() {
+    public HibernateTransactionManager txManager() throws URISyntaxException {
         return new HibernateTransactionManager(sessionFactory());
     }
 
