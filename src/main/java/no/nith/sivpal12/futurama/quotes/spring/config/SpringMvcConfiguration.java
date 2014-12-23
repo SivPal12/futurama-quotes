@@ -1,8 +1,20 @@
 package no.nith.sivpal12.futurama.quotes.spring.config;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.Properties;
+
+import javax.sql.DataSource;
+
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.AvailableSettings;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.hibernate4.HibernateTransactionManager;
+import org.springframework.orm.hibernate4.LocalSessionFactoryBuilder;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -14,8 +26,10 @@ import org.springframework.web.servlet.view.JstlView;
 @EnableWebMvc
 @ComponentScan(basePackages = {
         "no.nith.sivpal12.futurama.quotes.controllers",
-        "no.nith.sivpal12.futurama.quotes.services"
+        "no.nith.sivpal12.futurama.quotes.services",
+        "no.nith.sivpal12.futurama.quotes.repositories"
 })
+@EnableTransactionManagement
 public class SpringMvcConfiguration extends WebMvcConfigurerAdapter {
 
     @Override
@@ -32,4 +46,47 @@ public class SpringMvcConfiguration extends WebMvcConfigurerAdapter {
         viewResolver.setSuffix(".jsp");
         return viewResolver;
     }
+
+    @Bean
+    public SessionFactory sessionFactory() throws URISyntaxException {
+        LocalSessionFactoryBuilder builder =
+                new LocalSessionFactoryBuilder(dataSource());
+        builder.scanPackages("no.nith.sivpal12.futurama.quotes.entities")
+                .addProperties(getHibernateProperties());
+
+        return builder.buildSessionFactory();
+    }
+
+    private Properties getHibernateProperties() {
+        Properties prop = new Properties();
+        prop.put(AvailableSettings.FORMAT_SQL, "true");
+        prop.put(AvailableSettings.SHOW_SQL, "true");
+        prop.put(AvailableSettings.DIALECT,
+                "org.hibernate.dialect.PostgreSQL9Dialect");
+        return prop;
+    }
+
+    @Bean(name = "dataSource")
+    public DataSource dataSource() throws URISyntaxException {
+        // https://devcenter.heroku.com/articles/heroku-postgresql#spring-java
+        URI dbUri = new URI(System.getenv("DATABASE_URL"));
+        String username = dbUri.getUserInfo().split(":")[0];
+        String password = dbUri.getUserInfo().split(":")[1];
+        String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':'
+                + dbUri.getPort() + dbUri.getPath();
+
+        BasicDataSource ds = new BasicDataSource();
+        ds.setDriverClassName("org.postgresql.Driver");
+        ds.setUrl(dbUrl);
+        ds.setUsername(username);
+        ds.setPassword(password);
+        return ds;
+    }
+
+    // Create a transaction manager
+    @Bean
+    public HibernateTransactionManager txManager() throws URISyntaxException {
+        return new HibernateTransactionManager(sessionFactory());
+    }
+
 }
