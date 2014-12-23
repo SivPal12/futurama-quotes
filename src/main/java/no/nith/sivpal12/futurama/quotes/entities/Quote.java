@@ -16,7 +16,8 @@ public class Quote {
         return quote;
     }
 
-    public void setQuote(String quote) {
+    public Quote setQuote(String quote) {
         this.quote = quote;
+        return this;
     }
 }
